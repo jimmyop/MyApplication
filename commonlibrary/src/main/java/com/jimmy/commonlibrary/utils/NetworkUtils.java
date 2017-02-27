@@ -1,10 +1,4 @@
-/*
- * ****************************************************************************
- * Copyright (C) 2005-2013 UCWEB Corporation. All Rights Reserved File : NetworkUtils.java
- * Description : Creation : 2013-9-18 Author : mabin@ucweb.com History : Creation, 2013-9-18, mabin,
- * Create the file*****************************************************************************
- */
-package com.agile.merchant.utils;
+package com.jimmy.commonlibrary.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

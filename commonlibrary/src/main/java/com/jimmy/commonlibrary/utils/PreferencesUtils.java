@@ -1,14 +1,10 @@
-package com.agile.merchant.utils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.jpush.android.data.s;
+package com.jimmy.commonlibrary.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
+
+import java.util.ArrayList;
 
 /**
  * PreferencesUtils, easy to get or put data
@@ -324,7 +320,6 @@ public class PreferencesUtils {
 	 * 是否关注圈子索引
 	 * 
 	 * @param context
-	 * @param cid
 	 */
 	public static void setIsPayAttentionCircle(Context context, int position) {
 		SharedPreferences sp = context.getSharedPreferences(SHAREDP_NAME,

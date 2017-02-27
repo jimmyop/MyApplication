@@ -1,9 +1,9 @@
-package com.agile.merchant.utils;
-
-import java.io.Serializable;
+package com.jimmy.commonlibrary.utils;
 
 import android.content.Intent;
 import android.text.TextUtils;
+
+import java.io.Serializable;
 
 /**
  * 获取可配置化 的参数

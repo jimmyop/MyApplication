@@ -1,4 +1,4 @@
-package com.agile.merchant.utils;
+package com.jimmy.commonlibrary.utils;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -23,7 +23,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 
-import com.agile.merchant.BuildConfig;
+import com.jimmy.commonlibrary.BuildConfig;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -153,8 +153,7 @@ public class AndroidUtils {
 		try {
 			WifiManager manager = (WifiManager) context
 					.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info = (null == manager ? null : manager
-					.getConnectionInfo());
+			WifiInfo info = (null == manager ? null : manager.getConnectionInfo());
 			if (info != null) {
 				macAddress = info.getMacAddress();
 			}

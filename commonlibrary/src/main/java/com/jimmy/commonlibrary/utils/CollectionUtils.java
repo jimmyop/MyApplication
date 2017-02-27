@@ -1,4 +1,4 @@
-package com.agile.merchant.utils;
+package com.jimmy.commonlibrary.utils;
 
 
 import java.util.Collection;

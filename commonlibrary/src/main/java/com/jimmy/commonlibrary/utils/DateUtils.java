@@ -1,4 +1,4 @@
-package com.agile.merchant.utils;
+package com.jimmy.commonlibrary.utils;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;

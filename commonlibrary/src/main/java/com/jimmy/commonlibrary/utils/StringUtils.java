@@ -1,11 +1,7 @@
-package com.agile.merchant.utils;
+package com.jimmy.commonlibrary.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
-
-import com.agile.merchant.CommunityApplication;
-import com.agile.merchant.R;
-
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -640,8 +636,7 @@ public abstract class StringUtils {
 	}
 	
 	/***
-	 *  
-	 * @param Serializable serializable
+	 *
 	 * @return 出错时返回0.0
 	 */
 	public static double paserStr2Double(Serializable serializable){
@@ -662,8 +657,7 @@ public abstract class StringUtils {
 	
 	
 	/***
-	 *  
-	 * @param Serializable serializable
+	 *
 	 * @return 出错时返回0
 	 */
 	public static int paserStr2Int(Serializable serializable){
@@ -683,8 +677,7 @@ public abstract class StringUtils {
 	}
 	
 	/***
-	 *  
-	 * @param Serializable serializable
+	 *
 	 * @return 出错时返回0
 	 */
 	public static Long paserStr2Long(Serializable serializable){
@@ -701,20 +694,5 @@ public abstract class StringUtils {
 			return (Long) serializable;
 		} 
 		return 0l;
-	}
-	/***
-	 * 结尾不带 "/"的头部地址 http://www.4006983383.com
-	 * 后接 "/h5/...."
-	 * @param context
-	 * @return
-	 */
-	public static String getH5UrlHead(Context context){
-		String shareUrl = CommunityApplication.APP_URL;
-		if (TextUtils.isEmpty(shareUrl)) {
-			shareUrl = context.getResources().getString(R.string.app_url);
-		}
-		shareUrl = shareUrl.substring(0,shareUrl.lastIndexOf("/"));
-		shareUrl = shareUrl.replaceFirst("api", "www");
-		return shareUrl;
 	}
 }
