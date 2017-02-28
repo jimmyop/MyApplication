@@ -7,10 +7,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
-import com.jimmy.commonlibrary.utils.LogUtils;
-
-import org.apache.commons.logging.Log;
-
 import java.util.List;
 
 /**
@@ -18,6 +14,9 @@ import java.util.List;
  */
 
 public class RobService extends AccessibilityService {
+
+    private int totalCount = 0;
+    private int receCount = 0;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -30,30 +29,23 @@ public class RobService extends AccessibilityService {
             case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:
                 //界面文字改动
                 break;
-
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-//                handleNotification(event);
+                break;
+            case AccessibilityEvent.TYPE_VIEW_SCROLLED:
                 break;
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 String className = event.getClassName().toString();
                 if (className.equals("com.tencent.mm.ui.LauncherUI")) {
-//                    getPacket();
-                    Toast.makeText(getApplicationContext(),"LauncherUI",Toast.LENGTH_SHORT).show();
 
+                    Toast.makeText(getApplicationContext(), "LauncherUI", Toast.LENGTH_SHORT).show();
                 } else if (className.equals("com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyReceiveUI")) {
-//                    openPacket();
-//                    getPacket();
+
                     goInfo();
-
-                    Toast.makeText(getApplicationContext(),"LuckyMoneyReceiveUI",Toast.LENGTH_SHORT).show();
-
                 } else if (className.equals("com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyDetailUI")) {
 
-
-                    Toast.makeText(getApplicationContext(),"LuckyMoneyDetailUI",Toast.LENGTH_SHORT).show();
+                    getInfo();
                 }
-
                 break;
         }
     }
@@ -83,38 +75,17 @@ public class RobService extends AccessibilityService {
     private void goInfo() {
 
         AccessibilityNodeInfo rootNode = getRootInActiveWindow();
-        AccessibilityNodeInfo node = recycle(rootNode);
-
-//        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-//
-//        if (nodeInfo != null) {
-//
-//            //为了演示,直接查看了红包控件的id
-//            List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByViewId("@id/bgm");
-//            nodeInfo.recycle();
-//            for (AccessibilityNodeInfo item : list) {
-//                Toast.makeText(getApplicationContext(),"Info-"+ item.getText(),Toast.LENGTH_SHORT).show();
-//
-//            }
-//        }
+        recycle(rootNode);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void getInfo() {
 
+        totalCount = 0;
+        receCount = 0;
+
         AccessibilityNodeInfo rootNode = getRootInActiveWindow();
-        AccessibilityNodeInfo node = recycle(rootNode);
-
-        if (rootNode != null) {
-            //为了演示,直接查看了红包控件的id
-            List<AccessibilityNodeInfo> list = rootNode.findAccessibilityNodeInfosByViewId("@id/bi4");
-            rootNode.recycle();
-            for (AccessibilityNodeInfo item : list) {
-                item.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            }
-        }
-
-
+        recycle2(rootNode);
     }
 
     /**
@@ -138,7 +109,7 @@ public class RobService extends AccessibilityService {
 
     /**
      * 递归查找当前聊天窗口中的红包信息
-     *
+     * <p>
      * 聊天窗口中的红包都存在"领取红包"一词,因此可根据该词查找红包
      *
      * @param node
@@ -166,19 +137,86 @@ public class RobService extends AccessibilityService {
         if (node.getChildCount() == 0) {
             if (node.getText() != null) {
                 if ("查看领取详情".equals(node.getText().toString())) {
-
                     node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 }
             }
         } else {
-            for (int i = 0; i < node.getChildCount(); i++) {
-                if (node.getChild(i) != null) {
-                    recycle(node.getChild(i));
+
+            if (node.getClassName().toString().contains("ListView")) {
+
+                Toast.makeText(getApplicationContext(), node.getChildCount() + "--AA--" , Toast.LENGTH_SHORT).show();
+
+                node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+//                AccessibilityNodeInfo.
+
+                if (node.getChildCount() > 0) {
+
+                    AccessibilityNodeInfo header = node.getChild(0);
+
+                    if (header != null && header.getChildCount() > 0) {
+
+                        for (int i = 0; i < header.getChildCount(); i++) {
+
+                            String str = header.getChild(i).getText().toString();
+
+                            if (str.contains("/")) {
+                                String[] arr = str.split("/");
+                                String a = arr[0].substring(2, arr[0].length());
+                                String b = arr[1].substring(0, arr[1].length() - 1);
+                                try {
+                                    totalCount = Integer.valueOf(b);
+                                    receCount = Integer.valueOf(a);
+//                                    Toast.makeText(getApplicationContext(), "一共派了" + totalCount + "个红包，领取了" + receCount + "个", Toast.LENGTH_SHORT).show();
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+
+                if (node.getChildCount() >= receCount) {
+
+//                    Toast.makeText(getApplicationContext(), node.getChildCount() + "--AA--" + receCount, Toast.LENGTH_SHORT).show();
+
+                    for (int i = 1; i < node.getChildCount(); i++) {
+
+                    }
+
+//                    recycle3(node);
+                } else {
+
+                }
+            } else {
+                for (int i = 0; i < node.getChildCount(); i++) {
+                    if (node.getChild(i) != null) {
+                        recycle2(node.getChild(i));
+                    }
                 }
             }
         }
         return node;
     }
 
+    public AccessibilityNodeInfo recycle3(AccessibilityNodeInfo node) {
+
+        Toast.makeText(getApplicationContext(), "get info recycle3", Toast.LENGTH_SHORT).show();
+        if (node.getChildCount() != 0) {
+
+            for (int i = 0; i < node.getChildCount(); i++) {
+                if (node.getChild(i) != null) {
+                    recycle3(node.getChild(i));
+                }
+            }
+        } else {
+            if (node.getText() != null && node.getText().toString().contains("元")) {
+
+                Toast.makeText(getApplicationContext(), "get info 元", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return node;
+    }
 
 }
