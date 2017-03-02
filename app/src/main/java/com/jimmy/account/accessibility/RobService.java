@@ -32,11 +32,15 @@ public class RobService extends AccessibilityService {
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
                 break;
             case AccessibilityEvent.TYPE_VIEW_SCROLLED:
+//                Toast.makeText(getApplicationContext(),"TYPE_VIEW_SCROLLED",Toast.LENGTH_SHORT).show();
                 break;
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 String className = event.getClassName().toString();
                 if (className.equals("com.tencent.mm.ui.LauncherUI")) {
+
+                    totalCount = 0;
+                    receCount = 0;
 
                     Toast.makeText(getApplicationContext(), "LauncherUI", Toast.LENGTH_SHORT).show();
                 } else if (className.equals("com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyReceiveUI")) {
@@ -44,7 +48,14 @@ public class RobService extends AccessibilityService {
                     goInfo();
                 } else if (className.equals("com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyDetailUI")) {
 
-                    getInfo();
+                    getInfo(event);
+                } else if (className.equals("com.jimmy.account.activity.TestAccessibilityServiceActivity")) {
+
+                    AccessibilityNodeInfo rootNode = getRootInActiveWindow();
+                    AccessibilityNodeInfo sourceNode = event.getSource();
+
+                    getListViewNode(rootNode);
+
                 }
                 break;
         }
@@ -55,22 +66,6 @@ public class RobService extends AccessibilityService {
 
     }
 
-    /**
-     * 模拟点击,拆开红包
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    private void openPacket() {
-        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
-        if (nodeInfo != null) {
-            //为了演示,直接查看了红包控件的id
-            List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByViewId("@id/bi4");
-            nodeInfo.recycle();
-            for (AccessibilityNodeInfo item : list) {
-                item.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            }
-        }
-    }
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void goInfo() {
 
@@ -78,14 +73,38 @@ public class RobService extends AccessibilityService {
         recycle(rootNode);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    private void getInfo() {
+    /**
+     * 递归查找当前聊天窗口中的红包信息
+     * <p>
+     * 聊天窗口中的红包都存在"查看领取详情"一词,因此可根据该词查找红包
+     *
+     * @param node
+     */
+    public AccessibilityNodeInfo recycle(AccessibilityNodeInfo node) {
+        if (node.getChildCount() == 0) {
+            if (node.getText() != null) {
+                if ("查看领取详情".equals(node.getText().toString())) {
+                    node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                }
+            }
+        } else {
+            for (int i = 0; i < node.getChildCount(); i++) {
+                if (node.getChild(i) != null) {
+                    recycle(node.getChild(i));
+                }
+            }
+        }
+        return node;
+    }
 
-        totalCount = 0;
-        receCount = 0;
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private void getInfo(AccessibilityEvent event) {
 
         AccessibilityNodeInfo rootNode = getRootInActiveWindow();
-        recycle2(rootNode);
+        AccessibilityNodeInfo sourceNode = event.getSource();
+
+        getListViewNode(sourceNode);
     }
 
     /**
@@ -107,116 +126,149 @@ public class RobService extends AccessibilityService {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * 递归查找当前聊天窗口中的红包信息
-     * <p>
-     * 聊天窗口中的红包都存在"领取红包"一词,因此可根据该词查找红包
-     *
-     * @param node
+     * 获取页面中的ListView
      */
-    public AccessibilityNodeInfo recycle(AccessibilityNodeInfo node) {
-        if (node.getChildCount() == 0) {
-            if (node.getText() != null) {
-                if ("查看领取详情".equals(node.getText().toString())) {
+    private AccessibilityNodeInfo getListViewNode(AccessibilityNodeInfo node) {
 
-                    node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                }
-            }
-        } else {
-            for (int i = 0; i < node.getChildCount(); i++) {
-                if (node.getChild(i) != null) {
-                    recycle(node.getChild(i));
-                }
-            }
-        }
-        return node;
-    }
-
-    public AccessibilityNodeInfo recycle2(AccessibilityNodeInfo node) {
-
-        if (node.getChildCount() == 0) {
-            if (node.getText() != null) {
-                if ("查看领取详情".equals(node.getText().toString())) {
-                    node.getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                }
-            }
-        } else {
+        if (node != null && node.getChildCount() > 0) {
 
             if (node.getClassName().toString().contains("ListView")) {
 
-                Toast.makeText(getApplicationContext(), node.getChildCount() + "--AA--" , Toast.LENGTH_SHORT).show();
+                dealListViewInfo(node);
 
-                node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-//                AccessibilityNodeInfo.
-
-                if (node.getChildCount() > 0) {
-
-                    AccessibilityNodeInfo header = node.getChild(0);
-
-                    if (header != null && header.getChildCount() > 0) {
-
-                        for (int i = 0; i < header.getChildCount(); i++) {
-
-                            String str = header.getChild(i).getText().toString();
-
-                            if (str.contains("/")) {
-                                String[] arr = str.split("/");
-                                String a = arr[0].substring(2, arr[0].length());
-                                String b = arr[1].substring(0, arr[1].length() - 1);
-                                try {
-                                    totalCount = Integer.valueOf(b);
-                                    receCount = Integer.valueOf(a);
-//                                    Toast.makeText(getApplicationContext(), "一共派了" + totalCount + "个红包，领取了" + receCount + "个", Toast.LENGTH_SHORT).show();
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-
-                if (node.getChildCount() >= receCount) {
-
-//                    Toast.makeText(getApplicationContext(), node.getChildCount() + "--AA--" + receCount, Toast.LENGTH_SHORT).show();
-
-                    for (int i = 1; i < node.getChildCount(); i++) {
-
-                    }
-
-//                    recycle3(node);
-                } else {
-
-                }
             } else {
                 for (int i = 0; i < node.getChildCount(); i++) {
                     if (node.getChild(i) != null) {
-                        recycle2(node.getChild(i));
+                        getListViewNode(node.getChild(i));
                     }
                 }
             }
         }
-        return node;
+        return null;
     }
 
-    public AccessibilityNodeInfo recycle3(AccessibilityNodeInfo node) {
+    /**
+     * 处理ListView中的信息
+     */
+    private void dealListViewInfo(AccessibilityNodeInfo node) {
 
-        Toast.makeText(getApplicationContext(), "get info recycle3", Toast.LENGTH_SHORT).show();
-        if (node.getChildCount() != 0) {
+        if (node != null && node.getChildCount() > 0) {
 
-            for (int i = 0; i < node.getChildCount(); i++) {
-                if (node.getChild(i) != null) {
-                    recycle3(node.getChild(i));
+            if (totalCount == 0 && receCount == 0) {
+                AccessibilityNodeInfo header = node.getChild(0);
+                dealListViewHeaderInfo(header);
+                Toast.makeText(getApplicationContext(), totalCount + "--" + receCount, Toast.LENGTH_LONG).show();
+
+            }
+
+            dealListViewContentInfo(node);
+        }
+    }
+
+    /**
+     * 处理ListView Header中的信息
+     */
+    private void dealListViewHeaderInfo(AccessibilityNodeInfo header) {
+
+        if (header != null && header.getChildCount() > 0) {
+            for (int i = 0; i < header.getChildCount(); i++) {
+
+                if (header.getChild(i).getText() != null) {
+                    String str = header.getChild(i).getText().toString();
+                    if (str.contains("/")) {
+                        String[] arr = str.split("/");
+                        String a = arr[0].substring(2, arr[0].length());
+                        String b = arr[1].substring(0, arr[1].length() - 1);
+                        try {
+                            totalCount = Integer.valueOf(b);
+                            receCount = Integer.valueOf(a);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
-        } else {
-            if (node.getText() != null && node.getText().toString().contains("元")) {
-
-                Toast.makeText(getApplicationContext(), "get info 元", Toast.LENGTH_SHORT).show();
-            }
         }
-        return node;
     }
 
+    /**
+     * 处理ListView 列表中的信息
+     */
+    private void dealListViewContentInfo(AccessibilityNodeInfo node) {
+
+        if (node != null && node.getChildCount() > 1) {
+
+            for (int i = 1; i < node.getChildCount(); i++) {
+
+                dealListViewItemInfo(node.getChild(i));
+            }
+        }
+    }
+
+    /**
+     * 处理ListView item中的信息
+     */
+    private void dealListViewItemInfo(AccessibilityNodeInfo item) {
+
+        if (item != null && item.getChildCount() > 0) {
+
+            AccessibilityNodeInfo nodeName = findViewById(item, "com.tencent.mm:id/bi7");
+            AccessibilityNodeInfo nodePrice = findViewByText("元", item);
+
+            String name = null;
+            String price = null;
+            if (nodeName != null && nodeName.getText() != null) {
+                name = nodeName.getText().toString();
+            }
+            if (nodePrice != null && nodePrice.getText() != null) {
+                price = nodePrice.getText().toString();
+            }
+
+            if (name != null && price != null) {
+                Toast.makeText(getApplicationContext(), name + "-" + price, Toast.LENGTH_LONG).show();
+            } else {
+
+                if (name == null) {
+                    Toast.makeText(getApplicationContext(), "name null", Toast.LENGTH_LONG).show();
+                }
+                if (price == null) {
+                    Toast.makeText(getApplicationContext(), "price null", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    public AccessibilityNodeInfo findViewById(AccessibilityNodeInfo item, String id) {
+
+        if (item == null) {
+            return null;
+        }
+        List<AccessibilityNodeInfo> nodeInfoList = item.findAccessibilityNodeInfosByViewId(id);
+        if (nodeInfoList != null && !nodeInfoList.isEmpty()) {
+            for (AccessibilityNodeInfo nodeInfo : nodeInfoList) {
+                if (nodeInfo != null) {
+                    return nodeInfo;
+                }
+            }
+        }
+        return null;
+    }
+
+    public AccessibilityNodeInfo findViewByText(String text, AccessibilityNodeInfo item) {
+        if (item == null) {
+            return null;
+        }
+        List<AccessibilityNodeInfo> nodeInfoList = item.findAccessibilityNodeInfosByText(text);
+        if (nodeInfoList != null && !nodeInfoList.isEmpty()) {
+            for (AccessibilityNodeInfo nodeInfo : nodeInfoList) {
+                if (nodeInfo != null) {
+                    return nodeInfo;
+                }
+            }
+        }
+        return null;
+    }
 }
