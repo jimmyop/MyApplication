@@ -13,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.jimmy.account.R;
+import com.jimmy.account.floatwindow.FloatWindowService;
 
 import cn.bmob.v3.Bmob;
 
@@ -32,8 +34,12 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                Intent intent = new Intent(MainActivity.this, FloatWindowService.class);
+                startService(intent);
+                finish();
             }
         });
 
@@ -108,6 +114,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void go(View view){
+
+
+
         startActivity(new Intent(this,TestAccessibilityServiceActivity.class));
     }
 }
