@@ -1,4 +1,4 @@
-package com.jimmy.account.floatwindow;
+package com.jimmy.account.floatwin;
 
 import java.util.ArrayList;
 import java.util.List;

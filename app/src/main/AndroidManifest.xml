@@ -54,7 +54,7 @@
                 android:resource="@xml/accessibility"/>
         </service>
 
-        <service android:name=".floatwindow.FloatWindowService"/>
+        <service android:name=".floatwin.FloatWindowService"/>
 
     </application>
 

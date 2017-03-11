@@ -1,4 +1,4 @@
-package com.jimmy.account.floatwindow;
+package com.jimmy.account.floatwin;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
