@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="md_content_color">@color/text_main</item>
+        <item name="md_positive_color">@color/text_secondary</item>
+        <item name="md_negative_color">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:textColor">@color/text_main</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="actionMenuTextColor">@color/text_red</item>
+        <item name="actionBarItemBackground">@drawable/common_selector</item>
+        <item name="selectableItemBackground">@drawable/common_selector</item>
+        <item name="android:actionBarItemBackground">@drawable/common_selector</item>
+    </style>
+
+    <style name="AppToolBar">
+        <item name="android:id">@id/toolbar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/AppTheme.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+    </style>
+
+    <style name="CommmonListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+    </style>
+</resources>

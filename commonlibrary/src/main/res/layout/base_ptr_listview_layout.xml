@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.agile.merchant.widget.meituanptr.MeiTuanPullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/meituan_ptr_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/list_view"
+        style="@style/CommmonListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.agile.merchant.widget.meituanptr.MeiTuanPullRefreshLayout>

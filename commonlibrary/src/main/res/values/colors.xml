@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FB4747</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_transparency">#80000000</color>
+
+    <color name="text_main">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_third">#999999</color>
+    <color name="text_hint">#BBBBBB</color>
+    <color name="text_red">#FB4747</color>
+    <color name="text_red_second">#DB2E2E</color>
+    <color name="btn_orange">#E7C03A</color>
+    <color name="btn_orange_down">#dbab09</color>
+    <color name="line_gray">#dcdcdc</color>
+
+    <!-- 大背景-->
+    <color name="bg_main">#EEEEEE</color>
+    <color name="bg_secondary">#F3F3F3</color>
+    <color name="bg_red">#FB4747</color>
+    <color name="bg_red_pressed">#DB2E2E</color>
+    <color name="bg_red_disable">#FE7E7E</color>
+    <color name="main_blue">#41B9B2</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="bg_red_second">#FCE0E0</color>
+
+    <color name="bg_warn">#FEF6E1</color>
+    <color name="text_warn">#CC6D08</color>
+
+</resources>
