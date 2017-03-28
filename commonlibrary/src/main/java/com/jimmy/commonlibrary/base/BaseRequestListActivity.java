@@ -6,14 +6,13 @@ import android.widget.ListView;
 import com.jimmy.commonlibrary.R;
 import com.jimmy.commonlibrary.widget.meituan.MeiTuanPullRefreshLayout;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by chenjiaming1 on 2017/3/28.
  */
 
-public class BaseListActivity extends BaseActivity {
+public class BaseRequestListActivity extends BaseRequestActivity {
 
     protected static final int PAGE_SIZE = 10;
     protected static final String PARAM_PAGE_INDEX = "pageIndex";
