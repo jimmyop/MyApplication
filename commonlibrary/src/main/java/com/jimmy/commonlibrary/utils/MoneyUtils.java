@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.text.DecimalFormat;
 
 /**
- * Created by zengxiangbin on 2016/5/17.
+ *
  */
 public class MoneyUtils {
 

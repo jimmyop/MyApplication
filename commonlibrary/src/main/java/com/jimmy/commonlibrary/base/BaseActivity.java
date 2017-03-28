@@ -18,6 +18,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initListener();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     protected abstract void initView();
 
     protected abstract void initData(Bundle savedInstanceState);

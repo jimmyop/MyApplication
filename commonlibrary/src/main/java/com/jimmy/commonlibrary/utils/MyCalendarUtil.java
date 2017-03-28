@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 public class MyCalendarUtil {
 
-
 	/**
 	 * 当前日比较
 	 * 
@@ -103,7 +102,6 @@ public class MyCalendarUtil {
 		return calculatorYear(beginDate, endDate);
 	}
 
-	
 	public  static int calculatorMonth(long beginDateMills,long endDateMills) {
 
 		Calendar beginDate = getCalendarByMills(beginDateMills);
@@ -112,7 +110,6 @@ public class MyCalendarUtil {
 
 	}
 
-	
 	public static int calculatorDay(long beginDateMills,long endDateMills) {
 		Calendar beginDate = getCalendarByMills(beginDateMills);
 		Calendar endDate = getCalendarByMills(endDateMills);

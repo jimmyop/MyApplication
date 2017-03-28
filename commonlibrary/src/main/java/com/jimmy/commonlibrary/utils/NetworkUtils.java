@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
 public final class NetworkUtils {
@@ -86,6 +88,20 @@ public final class NetworkUtils {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * 获取WIFI热点名字
+	 *
+	 * @return
+	 */
+	public static String getWifiSSID(Context context) {
+		WifiManager wifi = (WifiManager) context
+				.getSystemService(Context.WIFI_SERVICE);
+		if (wifi == null)
+			return null;
+		WifiInfo info = wifi.getConnectionInfo();
+		return info.getSSID();
 	}
 	
 	

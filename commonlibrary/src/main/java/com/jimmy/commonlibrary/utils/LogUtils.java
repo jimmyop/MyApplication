@@ -53,9 +53,9 @@ public class LogUtils {
         StackTraceElement stackTrace = Thread.currentThread().getStackTrace()[4];
         String className = stackTrace.getClassName();
         String tag = className.substring(className.lastIndexOf('.') + 1);
-        message =
-                stackTrace.getMethodName() + "#" + stackTrace.getLineNumber() + " [" + message
-                        + "]";
+        message = className + "-" + stackTrace.getMethodName() +
+                "#" + stackTrace.getLineNumber() + " [" + message + "]";
+
         switch (type) {
             case Log.DEBUG:
                 Log.d(tag, message, tr);

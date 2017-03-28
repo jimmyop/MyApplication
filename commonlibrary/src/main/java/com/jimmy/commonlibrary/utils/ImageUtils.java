@@ -17,7 +17,6 @@ import java.net.URL;
 
 /***
  *  图片image的一些工具方法
- * @author fuxinrong
  *
  */
 public class ImageUtils {

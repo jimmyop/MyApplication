@@ -9,18 +9,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by zengxiangbin on 2016/5/13.
+ * 日期时间工具类
  */
 public class DateUtils {
-
-    private DateUtils() {
-    }
 
     public static final String DEFAULT_TIME_MM_DD_TIME = "MM-dd HH:mm";
     public static final String YYYY_MM_DD_OF_DATE = "yyyy年MM月dd日";
 
     /**
-     * 获取当天日期
+     * 获取系统当天日期
      *
      * @return
      */
@@ -31,7 +28,7 @@ public class DateUtils {
     }
 
     /**
-     * 获取当年的第一天
+     * 获取系统当年的第一天
      *
      * @return
      */
@@ -42,7 +39,7 @@ public class DateUtils {
     }
 
     /**
-     * 获取当年的最后一天
+     * 获取系统当年的最后一天
      *
      * @return
      */

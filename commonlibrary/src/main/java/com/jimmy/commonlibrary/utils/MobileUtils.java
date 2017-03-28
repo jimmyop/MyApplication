@@ -13,21 +13,20 @@ import java.util.regex.Pattern;
 
 /**
  * 手机相关工具类
- * Created by zengxiangbin on 2016/6/21.
  */
 public class MobileUtils {
-    private MobileUtils(){}
 
     /**
      * 手机号中间加密
-     * @param mobile
+     *
+     * @param mobile 手机号码
      * @return
      */
-    public static String getScretMobile(String mobile){
-        if (TextUtils.isEmpty(mobile)){
+    public static String getScretMobile(String mobile) {
+        if (TextUtils.isEmpty(mobile)) {
             return "";
         }
-        if (mobile.length() <= 7){
+        if (mobile.length() <= 7) {
             return mobile;
         }
 
@@ -36,7 +35,8 @@ public class MobileUtils {
 
     /**
      * 是否是一个合法的手机号
-     * @param mobile
+     *
+     * @param mobile 手机号
      * @return
      */
     public static boolean isMobile(String mobile) {
@@ -47,7 +47,8 @@ public class MobileUtils {
 
     /**
      * 是否是一个合法的电话号码
-     * @param telephone
+     *
+     * @param telephone 手机号
      * @return
      */
     public static boolean isTelephone(String telephone) {
@@ -59,32 +60,34 @@ public class MobileUtils {
 
     /**
      * 打电话
+     *
      * @param context
-     * @param phone
+     * @param phone 手机号
      */
-    public static void call(Context context, String phone){
-        if(context == null || TextUtils.isEmpty(phone)){
-            return ;
+    public static void call(Context context, String phone) {
+        if (context == null || TextUtils.isEmpty(phone)) {
+            return;
         }
 
-        call(context, Uri.parse("tel:"+phone));
+        call(context, Uri.parse("tel:" + phone));
     }
 
     /**
      * 打电话
+     *
      * @param context
      * @param uri
      */
-    public static void call(Context context, Uri uri){
-        if(context == null || uri == null){
-            return ;
+    public static void call(Context context, Uri uri) {
+        if (context == null || uri == null) {
+            return;
         }
         final PackageManager packageManager = context.getPackageManager();
-        Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
         List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 
-        if(CollectionUtils.isNullOrEmpty(resolveInfo)){
-            return ;
+        if (CollectionUtils.isNullOrEmpty(resolveInfo)) {
+            return;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -92,11 +95,12 @@ public class MobileUtils {
 
     /**
      * 判断url是否是一个电话类型的url
+     *
      * @param url
      * @return
      */
-    public static boolean isPhoneUrl(String url){
-        if(TextUtils.isEmpty(url)){
+    public static boolean isPhoneUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
             return false;
         }
         return url.startsWith("tel:");
