@@ -1,5 +1,7 @@
 package com.jimmy.commonlibrary.request;
 
+import android.content.Context;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -36,7 +38,7 @@ public class HttpUtil {
     private HttpUtil() {
         mGson = new Gson();
         //这里使用Application创建全局的请求队列
-        mRequestQueue = Volley.newRequestQueue(BaseApplication.myApplication);
+//        mRequestQueue = Volley.newRequestQueue(context);
     }
 
     public static HttpUtil getInstance() {
