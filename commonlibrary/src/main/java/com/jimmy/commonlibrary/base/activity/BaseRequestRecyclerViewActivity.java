@@ -1,7 +1,7 @@
-package com.jimmy.commonlibrary.base;
+package com.jimmy.commonlibrary.base.activity;
 
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.widget.RecyclerView;
 
 import com.jimmy.commonlibrary.R;
 import com.jimmy.commonlibrary.widget.meituan.MeiTuanPullRefreshLayout;
@@ -12,28 +12,28 @@ import butterknife.ButterKnife;
  * Created by chenjiaming1 on 2017/3/28.
  */
 
-public class BaseRequestListActivity extends BaseRequestActivity {
+public class BaseRequestRecyclerViewActivity extends BaseRequestActivity {
 
     protected static final int PAGE_SIZE = 10;
     protected static final String PARAM_PAGE_INDEX = "pageIndex";
     protected static final String PARAM_PAGE_SIZE = "pageSize";
 
     MeiTuanPullRefreshLayout mPtrLayout;
-    ListView mListView;
+    RecyclerView mRecyclerView;
 
-    protected ListView.LayoutParams pl_show;
-    protected ListView.LayoutParams pl_hide;
+    protected RecyclerView.LayoutParams pl_show;
+    protected RecyclerView.LayoutParams pl_hide;
 
     private boolean isLoadOver = true;// 是否已加载完成的开关
 
     @Override
     protected int getContentLayout() {
-        return R.layout.base_ptr_listview_layout;
+        return R.layout.base_ptr_recyclerview_layout;
     }
 
     @Override
     protected void initView() {
-        mListView = ButterKnife.findById(this, R.id.list_view);
+        mRecyclerView = ButterKnife.findById(this, R.id.recycler_view);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class BaseRequestListActivity extends BaseRequestActivity {
 
     }
 
-    protected ListView getListView() {
-        return mListView;
+    protected RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 
     protected MeiTuanPullRefreshLayout getPtrLayout() {

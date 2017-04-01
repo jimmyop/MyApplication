@@ -1,4 +1,4 @@
-package com.jimmy.commonlibrary.base;
+package com.jimmy.commonlibrary.base.activity;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

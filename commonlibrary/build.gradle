@@ -23,7 +23,15 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+
     compile 'com.jakewharton:butterknife:8.0.1'
+    /*material-dialogs*/
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+    /*fresco图片加载框架*/
+    compile 'com.facebook.fresco:fresco:1.2.0'
+    /*让fresco支持gif*/
+    compile 'com.facebook.fresco:animated-gif:1.2.0'
 }

@@ -6,12 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="md_content_color">@color/text_main</item>
-        <item name="md_positive_color">@color/text_secondary</item>
-        <item name="md_negative_color">@color/text_secondary</item>
         <item name="android:textColorHint">@color/text_hint</item>
         <item name="android:textColor">@color/text_main</item>
         <item name="android:windowIsTranslucent">false</item>
+        <!-- material dialogs 配置 -->
+        <item name="md_content_color">@color/text_main</item>
+        <item name="md_positive_color">@color/text_secondary</item>
+        <item name="md_negative_color">@color/text_secondary</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
