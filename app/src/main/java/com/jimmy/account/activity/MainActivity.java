@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import com.jimmy.account.R;
 import com.jimmy.account.floatwin.FloatWindowService;
 
-import cn.bmob.v3.Bmob;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Bmob.initialize(this, "081a447fcb6247c41f52cd89c9d2964b");
+//        Bmob.initialize(this, "081a447fcb6247c41f52cd89c9d2964b");
 
     }
 
@@ -111,10 +110,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void go(View view){
+    public void go(View view) {
 
 
-
-        startActivity(new Intent(this,TestAccessibilityServiceActivity.class));
+        startActivity(new Intent(this, TestAccessibilityServiceActivity.class));
     }
 }

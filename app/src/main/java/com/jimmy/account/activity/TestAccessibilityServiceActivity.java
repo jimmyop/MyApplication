@@ -11,25 +11,34 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jimmy.account.R;
+import com.jimmy.commonlibrary.base.activity.BaseRequestActivity;
+import com.jimmy.commonlibrary.net.BaseResponse;
+import com.jimmy.commonlibrary.net.RequestParams;
 
 /**
  * Created by chenjiaming1 on 2017/3/1.
  */
 
-public class TestAccessibilityServiceActivity extends AppCompatActivity {
+public class TestAccessibilityServiceActivity extends BaseRequestActivity {
 
+    SimpleDraweeView mSimpleDraweeView;
+    ListView mLis;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
+    protected int getContentLayout() {
+        return R.layout.test;
+    }
 
-        String gif = "http://ww2.sinaimg.cn/large/85cccab3gw1ete77tv9atg20b40684qq.gif";
+    @Override
+    protected void initView() {
 
-        SimpleDraweeView mSimpleDraweeView = (SimpleDraweeView) findViewById(R.id.sdv);
+        mSimpleDraweeView = (SimpleDraweeView) findViewById(R.id.sdv);
+        mLis = (ListView) findViewById(R.id.list);
+    }
 
+    @Override
+    protected void initData(Bundle savedInstanceState) {
         Uri uri = Uri.parse("http://img.huofar.com/data/jiankangrenwu/shizi.gif");
-//        Uri uri = Uri.parse("res://drawable-hdpi/"+R.drawable.gif1);
         DraweeController draweeController =
                 Fresco.newDraweeControllerBuilder()
                         .setUri(uri)
@@ -37,7 +46,6 @@ public class TestAccessibilityServiceActivity extends AppCompatActivity {
                         .build();
         mSimpleDraweeView.setController(draweeController);
 
-        ListView mLis = (ListView) findViewById(R.id.list);
 
         LinearLayout header = (LinearLayout) getLayoutInflater().inflate(R.layout.header, null);
         mLis.addHeaderView(header);
@@ -45,5 +53,35 @@ public class TestAccessibilityServiceActivity extends AppCompatActivity {
         mLis.setAdapter(new ArrayAdapter<String>(TestAccessibilityServiceActivity.this,
                 android.R.layout.simple_list_item_1, aa));
 
+        req();
+
+    }
+
+    @Override
+    public void requestSuccese(String taskid, BaseResponse resp) {
+
+        if (taskid.equals(taskId)) {
+
+
+        }
+    }
+
+    @Override
+    public void requestError(String taskid, String status, BaseResponse resp) {
+
+    }
+
+    @Override
+    public void requestException(String taskid, String status, BaseResponse resp) {
+
+    }
+
+    String taskId;
+
+    private void req() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.setUrlType("http://gank.io/api/data/Android/10/1");
+
+        taskId = requestDate(getClass(), requestParams);
     }
 }

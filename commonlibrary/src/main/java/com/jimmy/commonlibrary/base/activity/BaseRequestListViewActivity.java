@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.jimmy.commonlibrary.R;
+import com.jimmy.commonlibrary.net.BaseResponse;
 import com.jimmy.commonlibrary.widget.meituan.MeiTuanPullRefreshLayout;
 
 import butterknife.ButterKnife;
@@ -12,7 +13,7 @@ import butterknife.ButterKnife;
  * Created by chenjiaming1 on 2017/3/28.
  */
 
-public class BaseRequestListViewActivity extends BaseRequestActivity {
+public abstract class BaseRequestListViewActivity extends BaseRequestActivity {
 
     protected static final int PAGE_SIZE = 10;
     protected static final String PARAM_PAGE_INDEX = "pageIndex";
@@ -47,5 +48,20 @@ public class BaseRequestListViewActivity extends BaseRequestActivity {
 
     protected MeiTuanPullRefreshLayout getPtrLayout() {
         return mPtrLayout;
+    }
+
+    @Override
+    public void requestSuccese(String taskid, BaseResponse resp) {
+
+    }
+
+    @Override
+    public void requestError(String taskid, String status, BaseResponse resp) {
+
+    }
+
+    @Override
+    public void requestException(String taskid, String status, BaseResponse resp) {
+
     }
 }
