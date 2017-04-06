@@ -41,9 +41,9 @@ public class RequestParams {
     public RequestParams() {
         urlArrayParams = new ArrayMap<>();
         // 版本号没有特别说明的话是必传的，且是1.0
-        urlArrayParams.put("ver", "1.0");
-        urlArrayParams.put("system_version", android.os.Build.VERSION.RELEASE + "");
-        urlArrayParams.put("utm_medium", "android");
+//        urlArrayParams.put("ver", "1.0");
+//        urlArrayParams.put("system_version", android.os.Build.VERSION.RELEASE + "");
+//        urlArrayParams.put("utm_medium", "android");
 //        urlArrayParams.put("city_id", PreferencesUtil.getInstance().getCityId());
 //        urlArrayParams.put("device_id", PreferencesUtil.getInstance().getDeviceId());
 //        urlArrayParams.put("qyd_token", DexUtil.getInstance().decryptDES(PreferencesUtil.getInstance().getQydToken()));

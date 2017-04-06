@@ -81,54 +81,46 @@ public class RequestHelper {
                          final RequestParams requestParams) {
         final String tagName = tag.getClass().getSimpleName();
 
+        queue.add(getGsonRequest(tag, taskid, http, requestParams));
 
-        String requestAction = requestParams.get("action") + "";
-
-//        LogUtil.e("api request---------->",requestAction);
-
-        if (isAboutTokenRequest(requestAction)) {//是否是和Token相关的接口
-//            LogUtil.e("test---------->","-------1----");
-            isChangingQyd = true;//true为和Token相关的接口
-
-            if (requestMap.size() > 0) {//之前的队列中是否有正在请求的接口
-//                LogUtil.e("test---------->","-------2----");
-                isQydWaiting = true;//若之前的队列中有正在请求的接口，则等待前面的接口执行完成，若不等待有可能新的请求后台更新Token，导致之前的请求失败
-
-                // qyd 相关的接口进来之前,有其他接口进行中，qyd相关的进行等待，待前面的接口完成后，再执行
-                BlockEntity entity = new BlockEntity();
-                entity.setMethod(method);
-                entity.setTag(tag);
-                entity.setTaskid(taskid);
-                entity.setHttp(http);
-                entity.setParams(requestParams);
-                blockingRequestMap.put(requestParams.get("action") + "", entity);
-            } else {
-                //直接加入请求队列
-//                LogUtil.e("test---------->","-------3----");
-                queue.add(getGsonRequest(tag, taskid, http, requestParams));
-            }
-
-        } else {
-//            LogUtil.e("test---------->","-------4----");
-            // 判断 影响qyd_token的接口是否在等待，若等待则将请求加入缓存队列blockingRequestMap
-            if (isQydWaiting || isChangingQyd) {
-
-//                LogUtil.e("test---------->","-------5----");
-                BlockEntity entity = new BlockEntity();
-                entity.setMethod(method);
-                entity.setTag(tag);
-                entity.setTaskid(taskid);
-                entity.setHttp(http);
-                entity.setParams(requestParams);
-
-                blockingRequestMap.put(requestParams.get("action") + "", entity);
-
-            } else {
-//                LogUtil.e("test---------->","-------6----");
-                // 正常加入到消息队列
-                queue.add(getGsonRequest(tag, taskid, http, requestParams));
-            }
-        }
+//        String requestAction = requestParams.get("action") + "";
+//        if (isAboutTokenRequest(requestAction)) {//是否是和Token相关的接口
+//            isChangingQyd = true;//true为和Token相关的接口
+//
+//            if (requestMap.size() > 0) {//之前的队列中是否有正在请求的接口
+//
+//                isQydWaiting = true;//若之前的队列中有正在请求的接口，则等待前面的接口执行完成，若不等待有可能新的请求后台更新Token，导致之前的请求失败
+//
+//                // qyd 相关的接口进来之前,有其他接口进行中，qyd相关的进行等待，待前面的接口完成后，再执行
+//                BlockEntity entity = new BlockEntity();
+//                entity.setMethod(method);
+//                entity.setTag(tag);
+//                entity.setTaskid(taskid);
+//                entity.setHttp(http);
+//                entity.setParams(requestParams);
+//                blockingRequestMap.put(requestParams.get("action") + "", entity);
+//            } else {
+//                //直接加入请求队列
+//                queue.add(getGsonRequest(tag, taskid, http, requestParams));
+//            }
+//
+//        } else {
+//            // 判断 影响qyd_token的接口是否在等待，若等待则将请求加入缓存队列blockingRequestMap
+//            if (isQydWaiting || isChangingQyd) {
+//                BlockEntity entity = new BlockEntity();
+//                entity.setMethod(method);
+//                entity.setTag(tag);
+//                entity.setTaskid(taskid);
+//                entity.setHttp(http);
+//                entity.setParams(requestParams);
+//
+//                blockingRequestMap.put(requestParams.get("action") + "", entity);
+//
+//            } else {
+//                // 正常加入到消息队列
+//                queue.add(getGsonRequest(tag, taskid, http, requestParams));
+//            }
+//        }
     }
 
     private boolean isChangingQyd = false;
@@ -190,19 +182,6 @@ public class RequestHelper {
         final String tagName = tag.getClass().getSimpleName();
         final long startRequestTime = System.currentTimeMillis();
 
-//        SharedPreferences mSharedPreferences = appcontext.getSharedPreferences(
-//                "user_id", Context.MODE_PRIVATE);
-
-//        LogUtil.v("action------"+requestParams.get("action")+"---",DexUtil.getInstance().decryptDES(PreferencesUtil.getInstance().getQydToken()));
-
-//        requestParams.put("qyd_token", DexUtil.getInstance().decryptDES(PreferencesUtil.getInstance().getQydToken()));
-//        if(StringUtil.isNotEmpty(requestParams.get("user_id")+"")
-//                && StringUtil.isEmpty(mSharedPreferences.getString("user_id", ""))){
-//
-//            requestParams.removeKey("user_id");
-//        }
-
-//        LogUtil.e("add action request----", "" + requestParams.get("action"));
         requestMap.put(taskid, requestParams.get("action") + "");//添加请求到队列中
 
         final String url = RequestUtil.getUrl(requestParams);
@@ -211,9 +190,6 @@ public class RequestHelper {
 
             @Override
             public void onResponse(final BaseResponse baseResponse) {
-
-//                LogUtil.e("requestMap  size----", "" + requestMap.size());
-
 
                 if (SUCCESS_STATUS.equals(baseResponse.getStatus())) {
 
@@ -256,7 +232,7 @@ public class RequestHelper {
 
 //                LogUtil.e("requestMap  remove  action--1--", "" + requestMap.get(taskid));
                 requestMap.remove(taskid);
-                doAfterRequest();
+//                doAfterRequest();
 
             }
 
@@ -281,7 +257,7 @@ public class RequestHelper {
 
 //                LogUtil.e("requestMap  remove  action--2--", "" + requestMap.get(taskid));
                 requestMap.remove(taskid);
-                doAfterRequest();
+//                doAfterRequest();
             }
         }, requestParams);
 

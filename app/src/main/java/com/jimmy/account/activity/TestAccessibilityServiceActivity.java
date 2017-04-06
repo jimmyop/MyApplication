@@ -2,7 +2,6 @@ package com.jimmy.account.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -14,6 +13,7 @@ import com.jimmy.account.R;
 import com.jimmy.commonlibrary.base.activity.BaseRequestActivity;
 import com.jimmy.commonlibrary.net.BaseResponse;
 import com.jimmy.commonlibrary.net.RequestParams;
+import com.jimmy.commonlibrary.utils.LogUtils;
 
 /**
  * Created by chenjiaming1 on 2017/3/1.
@@ -54,6 +54,8 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
                 android.R.layout.simple_list_item_1, aa));
 
         req();
+
+        LogUtils.e("sASasaSasAASasaSA");
 
     }
 

@@ -3,13 +3,12 @@ package com.jimmy.commonlibrary.utils;
 
 import android.util.Log;
 
-import com.jimmy.commonlibrary.BuildConfig;
-
 /**
  * 统一的日志输出类，可以控制debug或者release的apk是否输出日志信息
  */
 public class LogUtils {
-    public final static boolean DEBUG = BuildConfig.DEBUG;//CommunityApplication.DEBUG;
+//    public final static boolean DEBUG = BuildConfig.DEBUG;//CommunityApplication.DEBUG;
+    public final static boolean DEBUG = true;//CommunityApplication.DEBUG;
 
     /**
      * 根据type输出日志消息，包括方法名，方法行数，Message
