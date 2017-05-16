@@ -72,7 +72,7 @@ public class CustomToolbar extends Toolbar{
 
     private void ensureTitleTextView(){
         if (mTitleText == null){
-            mTitleText = ButterKnife.findById(this, R.id.toolbar_title);
+//            mTitleText = ButterKnife.findById(this, R.id.toolbar_title);
         }
     }
 

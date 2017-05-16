@@ -56,7 +56,11 @@ public class RequestUtil {
 
             } else {
                 //此处打印需要一直暴露出来，所以不用LogUtil
-                Log.e("RequestUtil", "requets action =  " + param.get("action") + " | key = " + key + " is null");
+                if(StringUtils.isEmpty(param.get("action") +"")){
+                    Log.e("RequestUtil", "requets  key = " + key + " is null");
+                }else{
+                    Log.e("RequestUtil", "requets action =  " + param.get("action") + " | key = " + key + " is null");
+                }
             }
         }
 //        LogUtil.e("signBuilder-->",""+signBuilder.toString());

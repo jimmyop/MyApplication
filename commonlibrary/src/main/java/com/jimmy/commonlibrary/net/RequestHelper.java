@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.jimmy.commonlibrary.base.BaseApplication;
 import com.jimmy.commonlibrary.utils.JsonUtils;
 import com.jimmy.commonlibrary.utils.LogUtils;
+import com.jimmy.commonlibrary.utils.StringUtils;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -45,7 +46,6 @@ public class RequestHelper {
     private static RequestHelper helper;
 
     private Context appcontext;
-
 
     LinkedHashMap<String, String> requestMap = new LinkedHashMap<>();//请求的队列
     LinkedHashMap<String, BlockEntity> blockingRequestMap = new LinkedHashMap<>();//等待的队列
@@ -82,98 +82,6 @@ public class RequestHelper {
         final String tagName = tag.getClass().getSimpleName();
 
         queue.add(getGsonRequest(tag, taskid, http, requestParams));
-
-//        String requestAction = requestParams.get("action") + "";
-//        if (isAboutTokenRequest(requestAction)) {//是否是和Token相关的接口
-//            isChangingQyd = true;//true为和Token相关的接口
-//
-//            if (requestMap.size() > 0) {//之前的队列中是否有正在请求的接口
-//
-//                isQydWaiting = true;//若之前的队列中有正在请求的接口，则等待前面的接口执行完成，若不等待有可能新的请求后台更新Token，导致之前的请求失败
-//
-//                // qyd 相关的接口进来之前,有其他接口进行中，qyd相关的进行等待，待前面的接口完成后，再执行
-//                BlockEntity entity = new BlockEntity();
-//                entity.setMethod(method);
-//                entity.setTag(tag);
-//                entity.setTaskid(taskid);
-//                entity.setHttp(http);
-//                entity.setParams(requestParams);
-//                blockingRequestMap.put(requestParams.get("action") + "", entity);
-//            } else {
-//                //直接加入请求队列
-//                queue.add(getGsonRequest(tag, taskid, http, requestParams));
-//            }
-//
-//        } else {
-//            // 判断 影响qyd_token的接口是否在等待，若等待则将请求加入缓存队列blockingRequestMap
-//            if (isQydWaiting || isChangingQyd) {
-//                BlockEntity entity = new BlockEntity();
-//                entity.setMethod(method);
-//                entity.setTag(tag);
-//                entity.setTaskid(taskid);
-//                entity.setHttp(http);
-//                entity.setParams(requestParams);
-//
-//                blockingRequestMap.put(requestParams.get("action") + "", entity);
-//
-//            } else {
-//                // 正常加入到消息队列
-//                queue.add(getGsonRequest(tag, taskid, http, requestParams));
-//            }
-//        }
-    }
-
-    private boolean isChangingQyd = false;
-    private boolean isQydWaiting = false;
-
-
-    //判断 是否是影响 token的接口
-    private boolean isAboutTokenRequest(String ation) {
-
-        if (ation.equals("get_qyd_token") || ation.equals("union_login") || ation.equals("union_phone")
-                || ation.equals("login") || ation.equals("quick_login") || ation.equals("update_password")
-                || ation.equals("set_password") || ation.equals("reset_password") || ation.equals("logout"))
-            return true;
-        return false;
-    }
-
-    /*放开阻塞队列*/
-    private void startBlockingRequest() {
-
-//        LogUtil.e("Do block----", "start--" + System.currentTimeMillis());
-
-        java.util.Iterator it = blockingRequestMap.entrySet().iterator();
-        while (it.hasNext()) {
-            java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-            BlockEntity entity = (BlockEntity) entry.getValue();
-
-            if (isAboutTokenRequest(entry.getKey() + "")) {//此条件是为了避免此时在发起请求如果和Token无关会直接进入队列请求数据，Token校验失败
-                isChangingQyd = true;
-                if (requestMap.size() == 0) {
-                    isQydWaiting = true;
-                    queue.add(getGsonRequest(entity.getTag(), entity.getTaskid(), entity.getHttp(), entity.getParams()));
-//                    LogUtil.e("before remove--1-",""+blockingRequestMap.size());
-                    it.remove();
-//                    LogUtil.e("after remove--1-",""+blockingRequestMap.size());
-                } else {
-
-
-//                    LogUtil.e("Do disapper----", entry.getKey() + "");
-
-                }
-                break;
-            } else {
-                queue.add(getGsonRequest(entity.getTag(), entity.getTaskid(), entity.getHttp(), entity.getParams()));
-//                LogUtil.e("before remove--2-",""+blockingRequestMap.size());
-                it.remove();
-//                LogUtil.e("after remove--2-",""+blockingRequestMap.size());
-            }
-
-//            LogUtil.e("Do block----", "doing--" + System.currentTimeMillis());
-        }
-
-//        LogUtil.e("Do block----", "end--" + System.currentTimeMillis());
-
     }
 
     @SuppressWarnings("unchecked")
@@ -220,19 +128,12 @@ public class RequestHelper {
                     if (requestParams.isToastErrorMsg()) {
                         Toast.makeText(appcontext, baseResponse.getMsg(), Toast.LENGTH_SHORT).show();
                     }
-
-//                    if (baseResponse.getStatus().equals("-15")) { //更新qyd_token
-//                        EventBusUtil.postUpdateQYDToken();
-//                    }
-
                     http.requestException(taskid, baseResponse.getStatus(), baseResponse);
 
                 }
                 requestParams.clearUrlArrayParams();
 
-//                LogUtil.e("requestMap  remove  action--1--", "" + requestMap.get(taskid));
                 requestMap.remove(taskid);
-//                doAfterRequest();
 
             }
 
@@ -255,9 +156,7 @@ public class RequestHelper {
 
                 requestParams.clearUrlArrayParams();
 
-//                LogUtil.e("requestMap  remove  action--2--", "" + requestMap.get(taskid));
                 requestMap.remove(taskid);
-//                doAfterRequest();
             }
         }, requestParams);
 
@@ -270,22 +169,15 @@ public class RequestHelper {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         );
 
-        LogUtils.w(tagName, "Sending action " + requestParams.get("action") + " request to " + url);
+        String action = requestParams.get("action") + "";
 
-        return request;
-    }
+        if (StringUtils.isEmpty(action)) {
+            LogUtils.w(tagName, "Sending  request to " + url);
 
-    private void doAfterRequest() {
-//        LogUtil.e("requestMap  size--1--", "" + requestMap.size());
-        if (requestMap.size() == 0) {
-            isChangingQyd = false;
-            isQydWaiting = false;
-
-            if (blockingRequestMap.size() > 0)
-                startBlockingRequest();
+        } else {
+            LogUtils.w(tagName, "Sending action " + action + " request to " + url);
         }
-
-//        LogUtil.e("requestMap  size--2--", "" + requestMap.size());
+        return request;
     }
 
     /**

@@ -3,12 +3,13 @@ package com.jimmy.commonlibrary.base.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.jimmy.commonlibrary.R;
+import com.jimmy.commonlibrary.widget.TitleHeadLayout;
 
 import butterknife.ButterKnife;
 
@@ -18,36 +19,24 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private LinearLayout rootLayout;
+    private TitleHeadLayout mTitlelayout;
     private ViewGroup mContainerLayout;
 
     @LayoutRes
     protected int getRootLayout() {
-        if (hasToolbar()) {
-            return R.layout.base_toolbar_container;
-        } else {
-            return R.layout.base_container;
-        }
+        return R.layout.base_toolbar_container;
     }
 
     @LayoutRes
     protected abstract int getContentLayout();
 
     /**
-     * 是否显示导航栏
+     * 是否有标题拦
      *
      * @return
      */
-    protected boolean hasToolbar() {
-        return true;
-    }
-
-    /**
-     * 标题是否有返回按钮
-     *
-     * @return
-     */
-    protected boolean navigationUp() {
+    protected boolean hasTitleLayout() {
         return true;
     }
 
@@ -57,28 +46,33 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         setContentView(getRootLayout());
 
-        mToolbar = ButterKnife.findById(this, R.id.toolbar);
         mContainerLayout = ButterKnife.findById(this, R.id.container_layout);
+        rootLayout = ButterKnife.findById(this, R.id.root_layout);
+        mTitlelayout = ButterKnife.findById(this, R.id.title_head_layout);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View contentView = inflater.inflate(getContentLayout(), mContainerLayout, false);
         mContainerLayout.addView(contentView);
 
         ButterKnife.bind(this);
-        setupToolbar();
         initView();
+
+        // 判断有没有设置TitleLayout
+        if (hasTitleLayout()) {
+            initHeaderView(mTitlelayout);
+        } else {
+            rootLayout.removeView(mTitlelayout);
+        }
+
         initData(savedInstanceState);
     }
 
-    private void setupToolbar() {
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-            if (navigationUp()) {
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_icon);
-            }
-        }
+    /**
+     * 初始化Title布局
+     *
+     * @param headLayout
+     */
+    protected void initHeaderView(TitleHeadLayout headLayout) {
     }
 
     protected abstract void initView();
@@ -90,4 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public TitleHeadLayout getTitlelayout() {
+        return mTitlelayout;
+    }
 }

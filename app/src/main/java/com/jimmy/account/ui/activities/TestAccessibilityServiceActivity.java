@@ -1,4 +1,4 @@
-package com.jimmy.account.activity;
+package com.jimmy.account.ui.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +10,12 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jimmy.account.R;
+import com.jimmy.account.bean.TestBean;
 import com.jimmy.commonlibrary.base.activity.BaseRequestActivity;
 import com.jimmy.commonlibrary.net.BaseResponse;
 import com.jimmy.commonlibrary.net.RequestParams;
 import com.jimmy.commonlibrary.utils.LogUtils;
+import com.jimmy.commonlibrary.widget.TitleHeadLayout;
 
 /**
  * Created by chenjiaming1 on 2017/3/1.
@@ -23,6 +25,11 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
 
     SimpleDraweeView mSimpleDraweeView;
     ListView mLis;
+
+    @Override
+    protected void initHeaderView(TitleHeadLayout headLayout) {
+        super.initHeaderView(headLayout);
+    }
 
     @Override
     protected int getContentLayout() {
@@ -36,6 +43,7 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
         mLis = (ListView) findViewById(R.id.list);
     }
 
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         Uri uri = Uri.parse("http://img.huofar.com/data/jiankangrenwu/shizi.gif");
@@ -46,7 +54,6 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
                         .build();
         mSimpleDraweeView.setController(draweeController);
 
-
         LinearLayout header = (LinearLayout) getLayoutInflater().inflate(R.layout.header, null);
         mLis.addHeaderView(header);
         String[] aa = {"1dasdas", "2asdasda", "3dasdasda"};
@@ -54,9 +61,6 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
                 android.R.layout.simple_list_item_1, aa));
 
         req();
-
-        LogUtils.e("sASasaSasAASasaSA");
-
     }
 
     @Override
@@ -82,8 +86,8 @@ public class TestAccessibilityServiceActivity extends BaseRequestActivity {
 
     private void req() {
         RequestParams requestParams = new RequestParams();
-        requestParams.setUrlType("http://gank.io/api/data/Android/10/1");
-
+        requestParams.setUrlType("http://gank.io/api/data/Android/10/1?");
+        requestParams.setResponseClass(TestBean.class);
         taskId = requestDate(getClass(), requestParams);
     }
 }

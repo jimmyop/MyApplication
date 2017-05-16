@@ -8,14 +8,6 @@ import com.jimmy.commonlibrary.base.BaseApplication;
 
 public class AccountApplication extends BaseApplication {
 
-    AccountApplication instance;
-
-//    public AccountApplication getApplicationInstance() {
-//        if (instance == null) {
-//            instance = new AccountApplication();
-//        }
-//        return instance;
-//    }
 
     @Override
     public void onCreate() {

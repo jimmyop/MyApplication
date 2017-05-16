@@ -9,6 +9,7 @@ import com.jimmy.commonlibrary.net.RequestParams;
 import com.jimmy.commonlibrary.net.RequestUtil;
 import com.jimmy.commonlibrary.utils.JsonUtils;
 import com.jimmy.commonlibrary.utils.LogUtils;
+import com.jimmy.commonlibrary.utils.StringUtils;
 
 /**
  * 自定义GsonRequest是为了能在子线程里将json转成具体的类
@@ -51,7 +52,11 @@ public class GsonRequest<T> extends Request<T> {
             //数据是以字节的形式存放在NetworkResponse的data变量中的，这里将数据取出然后组装成一个String，并传入Response的success()方法中即可
             String jsonString = new String(response.data,
                     HttpHeaderParser.parseCharset(response.headers));
-            LogUtils.i(TAG, params.getString("action") + "_" + jsonString);
+            if(StringUtils.isEmpty(params.getString("action"))){
+                LogUtils.i(TAG,  "jsonString: " + jsonString);
+            }else{
+                LogUtils.i(TAG, params.getString("action") + ": " + jsonString);
+            }
 
 //            LogUtil.e("TrafficStats-total-",""+ TrafficStats.getTotalRxBytes());
 
