@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.jimmy.account.R;
 import com.jimmy.commonlibrary.base.activity.BaseActivity;
-import com.jimmy.commonlibrary.utils.LogUtils;
 import com.jimmy.commonlibrary.widget.TitleHeadLayout;
 
 /**
@@ -21,11 +20,9 @@ public class RxJavaTestActivity extends BaseActivity {
 
         headLayout.setTitleText("RxJavaTestRxJavaTestRxJavaTest");
 
-        headLayout.setRightFirstImageResource(R.drawable.ic_menu_camera);
+//        headLayout.setRightFirstImageResource(R.drawable.ic_menu_camera);
 
-        headLayout.setRightSecondImageResource(R.drawable.ic_menu_manage);
-
-
+//        headLayout.setRightSecondImageResource(R.drawable.ic_menu_manage);
     }
 
     @Override

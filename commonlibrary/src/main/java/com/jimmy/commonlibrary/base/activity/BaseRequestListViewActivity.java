@@ -64,4 +64,13 @@ public abstract class BaseRequestListViewActivity extends BaseRequestActivity {
     public void requestException(String taskid, String status, BaseResponse resp) {
 
     }
+
+
+    /***
+     *
+     * @param response
+     * @param tag
+     * @param isLoadMore 是否是加载更多
+     */
+    public abstract void onBindData(Object response, Object tag,boolean isLoadMore);
 }
