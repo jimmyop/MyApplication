@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 背景形式的loading -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!--<com.mobile.community.widgets.MyLinearLayout-->
+    <!--android:id="@+id/loaing_begin_ll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
+    <LinearLayout
+        android:id="@+id/loaing_begin_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/progress_bar_loading"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/loading_loadingtip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载中..."
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loaing_neterror_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/loaing_neterror_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/no_net" />
+
+        <TextView
+            android:id="@+id/loaing_neterror_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#666666" />
+    </LinearLayout>
+
+    <include layout="@layout/loading_manager_empty" />
+
+</LinearLayout>

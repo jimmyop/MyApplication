@@ -1,23 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<com.jimmy.commonlibrary.widget.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/toolbar"-->
-    <!--style="@style/AppToolBar">-->
+<?xml version="1.0" encoding="utf-8"?><!--<com.jimmy.commonlibrary.widget.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/toolbar"--><!--style="@style/AppToolBar">-->
 
-    <!--<TextView-->
-        <!--android:id="@+id/toolbar_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginLeft="@dimen/border_margin"-->
-        <!--android:layout_marginRight="@dimen/border_margin"-->
-        <!--android:ellipsize="middle"-->
-        <!--android:maxLines="1"-->
-        <!--android:text="@string/app_name"-->
-        <!--android:textColor="@color/text_main"-->
-        <!--android:textSize="@dimen/text_size_title" />-->
-<!--</com.jimmy.commonlibrary.widget.CustomToolbar>-->
+<!--<TextView--><!--android:id="@+id/toolbar_title"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="center"--><!--android:layout_marginLeft="@dimen/border_margin"--><!--android:layout_marginRight="@dimen/border_margin"--><!--android:ellipsize="middle"--><!--android:maxLines="1"--><!--android:text="@string/app_name"--><!--android:textColor="@color/text_main"--><!--android:textSize="@dimen/text_size_title" />--><!--</com.jimmy.commonlibrary.widget.CustomToolbar>-->
 
 <com.jimmy.commonlibrary.widget.TitleHeadLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/title_head_layout"
-android:layout_width="match_parent"
-android:layout_height="wrap_content" />
+    android:id="@+id/title_head_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />

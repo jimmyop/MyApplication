@@ -22,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private LinearLayout rootLayout;
     private TitleHeadLayout mTitlelayout;
     private ViewGroup mContainerLayout;
+    private View contentView;
 
     @LayoutRes
     protected int getRootLayout() {
@@ -46,12 +47,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         setContentView(getRootLayout());
 
-        mContainerLayout = ButterKnife.findById(this, R.id.container_layout);
         rootLayout = ButterKnife.findById(this, R.id.root_layout);
         mTitlelayout = ButterKnife.findById(this, R.id.title_head_layout);
+        mContainerLayout = ButterKnife.findById(this, R.id.container_layout);
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        View contentView = inflater.inflate(getContentLayout(), mContainerLayout, false);
+        contentView = inflater.inflate(getContentLayout(), mContainerLayout, false);
         mContainerLayout.addView(contentView);
 
         ButterKnife.bind(this);
@@ -72,8 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param headLayout
      */
-    protected void initHeaderView(TitleHeadLayout headLayout) {
-    }
+    protected void initHeaderView(TitleHeadLayout headLayout) {}
 
     protected abstract void initView();
 

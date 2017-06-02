@@ -33,4 +33,6 @@
     <color name="bg_warn">#FEF6E1</color>
     <color name="text_warn">#CC6D08</color>
 
+    <color name="common_bg">#f3f3f3</color>
+
 </resources>
